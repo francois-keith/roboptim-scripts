@@ -89,7 +89,7 @@ function pull_package()
 			echo "ERROR: Failure on pull " $1
 			cd $PREV_PWD
 			exit -1
-	    fi
+    fi
 		git submodule update
 		cd $PREV_PWD
 	else
@@ -363,7 +363,7 @@ function build_package()
 	fi
 
 	if [ $OS_is_windows -eq 1 ]; then
-		cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DGENERATE_DOC=${GENERATE_DOC} -DCXX_DISABLE_WERROR=1   ../..
+		cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=$2 -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DGENERATE_DOC=${GENERATE_DOC} -DCXX_DISABLE_WERROR=1   ../..
 	    v=$?
 	else	
 		cmake -DCMAKE_BUILD_TYPE=$2 -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DSMALLMATRIX="jrl-mathtools" -DHRP2_MODEL_DIRECTORY="${HRP2_MODEL_DIRECTORY}"  -DHRP2_CONFIG_DIRECTORY="${HRP2_CONFIG_DIRECTORY}"   -DBoostNumericBindings_INCLUDE_DIR="${BOOST_SANDBOX}" -DUSE_COLLISION=OFF -DGENERATE_DOC=${GENERATE_DOC}  -DCXX_DISABLE_WERROR=1 ../..
@@ -465,28 +465,39 @@ function testg() {
     # test
     if [ -d /Users/ ]; then 
       export DYLD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DYLD_LIBRARY_PATH      
-  else
-    # export LD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LD_LIBRARY_PATH      
-    # export DL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DL_LIBRARY_PATH
-    # export LTDL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LTDL_LIBRARY_PATH      
-    export LTLD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LTLD_LIBRARY_PATH      
-    export LD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LD_LIBRARY_PATH      
-    export DL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DL_LIBRARY_PATH
-    export LTDL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LTDL_LIBRARY_PATH        
-    echo $LTDL_LIBRARY_PATH
-    
-    export PATH_OLD=$PATH;
-    export PYTHONPATH=$SOT_ROOT/lib/python2.7/site-packages:$PYTHONPATH
-    export PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$BOOST_ROOT/lib/:$PATH
-    export PATH=`pwd`/src/Release:$PATH
-    export PATH=/C/code/install/log4cxx/lib:$PATH
-    export PATH=/C/code/install/roboptim/bin:$PATH
-    export PATH=/C/code/install/libtool-1.5.26-bin/bin:$PATH
+    else
+      # export LD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LD_LIBRARY_PATH      
+      # export DL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DL_LIBRARY_PATH
+      export LTDL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LTDL_LIBRARY_PATH      
+      export LTLD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LTLD_LIBRARY_PATH      
+      # export LD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LD_LIBRARY_PATH      
+      # export DL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DL_LIBRARY_PATH
+      export LTDL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/roboptim-core:$SOT_ROOT/lib/plugin/:$LTDL_LIBRARY_PATH        
+      echo $LTDL_LIBRARY_PATH
+      
+      export PATH_OLD=$PATH;
+      export PYTHONPATH=$SOT_ROOT/lib/python2.7/site-packages:$PYTHONPATH
+      export PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$BOOST_ROOT/lib/:$PATH
+      export PATH=`pwd`/src/RelWithDebInfo:$PATH
+      export PATH=`pwd`/src/Release:$PATH
+      # export PATH="C:/code/install/Ipopt-3.11.3/lib":$PATH
+
+      export PATH=/C/code/install/log4cxx/lib:$PATH
+      export PATH=$SOT_ROOT/bin:$PATH
+      export PATH=/C/code/install/libtool-1.5.26-bin/bin:$PATH
     fi;
-    ctest -C Release
+    ctest -C $2
+    if ! [ $? -eq 0 ];  then
+			echo "ERROR: Failure on ctest " $1
+			cd $PREV_PWD
+			exit -1
+    fi
+
+
     if ! [ -d /Users/ ]; then 
       export PATH=$PATH_OLD;
     fi;
+    
     # end test
 
     cd $PREV_PWD
@@ -556,7 +567,7 @@ function vsbuild_80() {
 		rm -f CMakeCache.txt
 	fi
 	
-	cmake -G"Visual Studio 14 Win64" -DCMAKE_BUILD_TYPE=$2 -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DSMALLMATRIX="jrl-mathtools" -DHRP2_MODEL_DIRECTORY=${HRP2_MODEL_DIRECTORY}  -DHRP2_CONFIG_DIRECTORY=${HRP2_CONFIG_DIRECTORY}   -DBoostNumericBindings_INCLUDE_DIR=${BOOST_SANDBOX} -DUSE_COLLISION=OFF -DGENERATE_DOC=${GENERATE_DOC} ../..
+	cmake -G"Visual Studio 14 Win64" -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DCMAKE_BUILD_TYPE=$2 ../..
 
 	v=$?
     # if ! [ $v -eq 0 ];  then
@@ -606,7 +617,7 @@ function BuildHandling ()
 {
     export mode=RELEASE
     if [ $BuildRelease -eq 1 ];	then  export mode=RELEASE;fi
-    if [ $BuildDebug -eq 1 ];	then  export mode=DEBUG;fi
+    if [ $BuildDebug -eq 1 ];	then  export mode=Debug;fi
     if [ $mclean -eq 1 ];	then   	clean_package   $1 $mode;fi
     if [ $eclip -eq 1 ];	then	ebuild          $1 $mode;fi
     if [ $vsbld_80 -eq 1 ];	then	vsbuild_80      $1 $mode;fi

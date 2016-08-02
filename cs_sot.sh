@@ -7,7 +7,7 @@
 # -----------------------------------------------------
 export PATH=$PATH:/C/code/pkg-config_0.23-3_win32/bin/
 # --  SoT PATHS
-# Mandatory 1.#INFomations
+# Mandatory infomations
 if [ -d '/C/Windows' ]; then
 	export SOT_ROOT=/C/code/install/roboptim
 	export SOURCE_DIR=/C/code/software/roboptim
