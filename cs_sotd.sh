@@ -24,8 +24,6 @@ export BLAS_ROOT=/C/code/install/
 
 
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\roboptimd\lib\pkgconfig"
-# export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:/code\install\log4cxx\lib\pkgconfig"
-# export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:/code\install\libtool-1.5.26-bin\lib\pkgconfig"
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\Ipopt-3.11.3\lib\pkgconfig"
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:/code\install\eigen\lib\pkgconfig"
 

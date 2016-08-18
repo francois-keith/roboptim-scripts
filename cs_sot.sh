@@ -23,17 +23,11 @@ fi
 
 
 export BOOST_ROOT=/C/code/install/boost_1_59_0
-# export EIGEN3_INCLUDE_DIR=/C/code/install/eigen/include/eigen3/
 export BLAS_ROOT=/C/code/install/
 
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\roboptim\lib\pkgconfig"
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\log4cxx\lib\pkgconfig"
-# export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\libtool-1.5.26-bin\lib\pkgconfig"
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\Ipopt-3.11.3\lib\pkgconfig"
-# export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\Ipopt-3.12.4\lib\pkgconfig"
-
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH";C:\code\install\eigen\lib\pkgconfig"
-# export PKG_CONFIG_PATH=$PKG_CONFIG_PATH":/C/code/install/eigen/lib/pkgconfig"
 
 # -----------------------------------------------------
 # -- End of the customization part

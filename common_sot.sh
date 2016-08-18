@@ -18,44 +18,6 @@ else
 	export MAKE=make
 fi
 
-# # Deal with options
-# while getopts ":chlmour:" option; do
-  # case "$option" in
-    # h)  # it's always useful to provide some help
-        # usage_message
-        # exit 0
-        # ;;
-    # l)  DISPLAY_LIST_INSTRUCTIONS=1
-        # ;;
-
-    # c)  REMOVE_CMAKECACHE=1
-		# ;;
-
-    # m)  COMPILE_PACKAGE=1
-        # UPDATE_PACKAGE=0
-        # ;;
-    # o)  COMPILE_PACKAGE=1
-        # LOG_PACKAGE=1
-        # UPDATE_PACKAGE=0
-        # ;;
-    # u)  COMPILE_PACKAGE=0
-        # UPDATE_PACKAGE=1
-        # ;;
-    # r)  ROS_VERSION=$OPTARG
-        # ;;
-    # :)  warn "Error: -$option requires an argument"
-        # usage_message
-        # exit 1
-        # ;;
-    # ?)  warn "Error: unknown option -$option"
-        # usage_message
-        # exit 1
-        # ;;
-  # esac
-# done
-# shift $(($OPTIND-1))
-
-
 
 ## -- Git functions
 
@@ -366,7 +328,7 @@ function build_package()
 		cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=$2 -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DGENERATE_DOC=${GENERATE_DOC} -DCXX_DISABLE_WERROR=1   ../..
 	    v=$?
 	else	
-		cmake -DCMAKE_BUILD_TYPE=$2 -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DSMALLMATRIX="jrl-mathtools" -DHRP2_MODEL_DIRECTORY="${HRP2_MODEL_DIRECTORY}"  -DHRP2_CONFIG_DIRECTORY="${HRP2_CONFIG_DIRECTORY}"   -DBoostNumericBindings_INCLUDE_DIR="${BOOST_SANDBOX}" -DUSE_COLLISION=OFF -DGENERATE_DOC=${GENERATE_DOC}  -DCXX_DISABLE_WERROR=1 ../..
+		cmake -DCMAKE_BUILD_TYPE=$2 -DCMAKE_INSTALL_PREFIX=${SOT_ROOT} -DCXX_DISABLE_WERROR=1 ../..
 		v=$?
     fi
 
@@ -389,6 +351,7 @@ function build_package()
 	fi
 	
 	
+    # ${MAKE} -s 
     ${MAKE} -s install 
     v=$?
     if ! [ $v -eq 0 ];  then 
@@ -399,46 +362,6 @@ function build_package()
 	
 	cd $PREV_PWD
 }
-
-# function testg() {
-    # echo
-    # echo "--- build package "$1"  (building mode: "$2") ---"
-    # echo
-    # if ! [ -d $1 ];  then
-        # echo '   The directory ' $1 ' does not exists '
-        # return 1
-    # fi;
-
-    # PREV_PWD=`pwd`
-   
-    # cd $1
-   
-    # if ! [ -d $OS_build_rep ];  then 
-        # mkdir $OS_build_rep;
-    # fi;    
-    # cd $OS_build_rep;
-   
-    # if ! [ -d $2 ];   then  mkdir $2;   fi;
-    # cd $2;
-   
-    # # test
-    # if [ -d /Users/ ]; then 
-	    # export DYLD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DYLD_LIBRARY_PATH	    
-    # else
-	    # export PATH_OLD=$PATH;
-	    # export PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$BOOST_ROOT/lib/:$PATH
-	    # export PATH=/C/Users/François/code/Libraries/log4cxx/lib:$PATH
-		# export PATH=/C/Users/François/code/Libraries/libtool-1.5.26-bin/bin:$PATH
-    # fi;
-    # ctest -E experimental
-    # if ! [ -d /Users/ ]; then 
-    	# export PATH=$PATH_OLD;
-    # fi;
-    # # end test
-
-    # cd $PREV_PWD
-# }
-
 
 
 function testg() {
@@ -462,31 +385,8 @@ function testg() {
     if ! [ -d $2 ];   then  mkdir $2;   fi;
     cd $2;
    
-    # test
-    if [ -d /Users/ ]; then 
-      export DYLD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DYLD_LIBRARY_PATH      
-    else
-      # export LD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LD_LIBRARY_PATH      
-      # export DL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DL_LIBRARY_PATH
-      export LTDL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LTDL_LIBRARY_PATH      
-      export LTLD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LTLD_LIBRARY_PATH      
-      # export LD_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$LD_LIBRARY_PATH      
-      # export DL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$DL_LIBRARY_PATH
-      export LTDL_LIBRARY_PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/roboptim-core:$SOT_ROOT/lib/plugin/:$LTDL_LIBRARY_PATH        
-      echo $LTDL_LIBRARY_PATH
-      
-      export PATH_OLD=$PATH;
-      export PYTHONPATH=$SOT_ROOT/lib/python2.7/site-packages:$PYTHONPATH
-      export PATH=`pwd`/src:$SOT_ROOT/lib:$SOT_ROOT/lib/plugin/:$BOOST_ROOT/lib/:$PATH
-      export PATH=`pwd`/src/RelWithDebInfo:$PATH
-      export PATH=`pwd`/src/Release:$PATH
-      # export PATH="C:/code/install/Ipopt-3.11.3/lib":$PATH
-
-      export PATH=/C/code/install/log4cxx/lib:$PATH
-      export PATH=$SOT_ROOT/bin:$PATH
-      export PATH=/C/code/install/libtool-1.5.26-bin/bin:$PATH
-    fi;
     ctest -C $2
+      
     if ! [ $? -eq 0 ];  then
 			echo "ERROR: Failure on ctest " $1
 			cd $PREV_PWD
@@ -494,10 +394,6 @@ function testg() {
     fi
 
 
-    if ! [ -d /Users/ ]; then 
-      export PATH=$PATH_OLD;
-    fi;
-    
     # end test
 
     cd $PREV_PWD

@@ -7,7 +7,6 @@ if ! [ -d ${SOURCE_DIR} ]; then echo 'the folder \"'${SOURCE_DIR}'\" does not ex
 
 cd ${SOURCE_DIR}
 
-
 inst_array[index]="install_pkg log4cxxWin32/cmake  git://github.com/gergondet"
 let "index= $index + 1"
 
@@ -28,24 +27,24 @@ let "index= $index + 1"
 # inst_array[index]="install_pkg roboptim-analysis git://github.com/roboptim"
 # let "index= $index + 1"
 
-# inst_array[index]="install_pkg roboptim-core-plugin-ipopt git://github.com/roboptim"
-# let "index= $index + 1"
+inst_array[index]="install_pkg roboptim-core-plugin-ipopt git://github.com/roboptim"
+let "index= $index + 1"
 
 inst_array[index]="install_pkg roboptim-core-plugin-eigen git://github.com/roboptim"
 let "index= $index + 1"
 
-# inst_array[index]="install_pkg qhull https://github.com/qhull/"
-# let "index= $index + 1"
+inst_array[index]="install_pkg qhull https://github.com/qhull/"
+let "index= $index + 1"
 
-# inst_array[index]="install_pkg roboptim-capsule git://github.com/roboptim"
-# let "index= $index + 1"
+inst_array[index]="install_pkg roboptim-capsule git://github.com/roboptim"
+let "index= $index + 1"
 
 
 # # # inst_array[index]="install_pkg roboptim-core-plugin-qpoases git://github.com/roboptim"
 # # # let "index= $index + 1"
 
-# inst_array[index]="install_pkg roboptim-trajectory git://github.com/roboptim"
-# let "index= $index + 1"
+inst_array[index]="install_pkg roboptim-trajectory git://github.com/roboptim"
+let "index= $index + 1"
 
 # inst_array[index]="install_pkg roboptim-tutorial git://github.com/roboptim"
 # let "index= $index + 1"
