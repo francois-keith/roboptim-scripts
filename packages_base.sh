@@ -14,12 +14,10 @@ inst_array[index]="install_pkg ltdl-win32  git://github.com/gergondet"
 let "index= $index + 1"
 
 inst_array[index]="install_pkg roboptim-core  git://github.com/roboptim"
-# inst_array[index]="install_pkg roboptim-core git://github.com/francois-keith"
-# inst_array[index]="install_pkg rc git://github.com/francois-keith"
 let "index= $index + 1"
 
-# inst_array[index]="install_pkg roboptim-core-python git://github.com/roboptim"
-# let "index= $index + 1"
+inst_array[index]="install_pkg roboptim-core-python git://github.com/roboptim"
+let "index= $index + 1"
 
 # inst_array[index]="install_pkg roboptim-core-manifold git://github.com/roboptim"
 # let "index= $index + 1"
@@ -47,10 +45,6 @@ inst_array[index]="install_pkg roboptim-trajectory git://github.com/roboptim"
 let "index= $index + 1"
 
 # inst_array[index]="install_pkg roboptim-tutorial git://github.com/roboptim"
-# let "index= $index + 1"
-
-
-# inst_array[index]="install_pkg plop"
 # let "index= $index + 1"
 
 
